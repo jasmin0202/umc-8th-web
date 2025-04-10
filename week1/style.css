@@ -24,6 +24,7 @@ body {
     margin: 0 auto; /* 중앙 배치 */
 }
 
+
 .inputcontainer {
     grid-area:box1;
     display:flex;
