@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TopratedPage = () => {
+const TopRatedMoviePage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const TopratedPage = () => {
   )
 }
 
-export default TopratedPage
+export default TopRatedMoviePage
