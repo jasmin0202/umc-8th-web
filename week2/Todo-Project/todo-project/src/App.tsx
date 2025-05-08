@@ -1,12 +1,13 @@
-import Todo from './components/Todo'
+import TodoAfter from './components/TodoAfter'
 import React from 'react'
 import './App.css'
+import { TodoProvider } from './context/Todocontext'
 
 function App() {
 return <div>
-  <>
-  <Todo />
-  </>
+  <TodoProvider>
+    <TodoAfter />
+  </TodoProvider>
 </div>
 }
 
