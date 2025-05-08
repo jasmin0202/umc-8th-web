@@ -1,4 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+const MoviePage = () => {
+    return (
+        <h1>영화</h1>
+=======
+>>>>>>> 76ed070e172670944556d0da4a15e2a022f12383
 
 import { Movie, MovieResponse } from '../types/movie'
 import { useState, useEffect } from 'react'
@@ -34,11 +41,15 @@ const MoviePage = () => {
                 </li>
             ))}
         </ul>
+<<<<<<< HEAD
 =======
 const MoviePage = () => {
     return (
         <h1>영화</h1>
 >>>>>>> b5f50e2b4b73d352c33c3ba23a942e4dba5ae229
+=======
+>>>>>>> 8aa85a1ad6ec53662dec6c3902f451304528b36a
+>>>>>>> 76ed070e172670944556d0da4a15e2a022f12383
     )
 }
 
