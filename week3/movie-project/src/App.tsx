@@ -11,24 +11,28 @@ import UpcomingMoviePage from './pages/UpcomingMoviePage'
 const router = createBrowserRouter([ 
   {
     path: '/',
-    element: <RootLayout />
-  },
-  {
-    path: '/Popular',
-    element: <PopularMoviePage />
-  },
-  {
-    path: '/nowplaying',
-    element: <NowPlayingMoviePage />
-  },
-  {
-    path: '/top-rated',
-    element: <TopRatedMoviePage/>
-  },
-  {
-    path: '/upcoming',
-    element: <UpcomingMoviePage />
-  },
+    element: <RootLayout />,
+    errorElement: <h1>Page not found</h1>,
+    children: [
+      {
+        path: '/Popular',
+        element: <PopularMoviePage />
+      },
+      {
+        path: '/nowplaying',
+        element: <NowPlayingMoviePage />
+      },
+      {
+        path: '/top-rated',
+        element: <TopRatedMoviePage/>
+      },
+      {
+        path: '/upcoming',
+        element: <UpcomingMoviePage />
+      },
+    ]
+  }
+  
 ])
 
 function App() {
