@@ -21,6 +21,7 @@ const MyPage = () => {
     <div>
       {data.name ? (
         <>
+          <h2>{data.name}님 환영합니다.</h2>
           <p>Name: {data.name}</p>
           <p>Email: {data.email}</p>
         </>

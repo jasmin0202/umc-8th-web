@@ -6,6 +6,8 @@ import { validateSignin } from '../utils/validate';
 import { postSignin } from '../apis/auth';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEY } from '../constants/key';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const {setItem} = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
@@ -17,20 +19,28 @@ const LoginPage = () => {
     validate: validateSignin,
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async () => {
     console.log(values);
     try {
        const response = await postSignin(values);
        console.log(response);
       setItem(response.data.accessToken); // 로그인 성공 시 어세스토큰으로 키를 저장
+      setUser({
+        id: response.data.id,
+        name: response.data.name,
+      })
+      navigate('/mypage');
    } catch(error){
     alert(error?.message);
    }
-   
   };
   
 const isDisabled = Object.values(errors || {}).some((error) => error.length > 0) ||
   Object.values(values).some((value) => value === "");
+
+const { setUser } = useAuth();
 
   return (
   <div className="flex flex-col items-center justify-center h-full gap-4">
