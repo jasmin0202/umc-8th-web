@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import useForm from '../hooks/useForm';
 import type { UserSigninInformation } from '../utils/validate';
 import { validateSignin } from '../utils/validate';
 import { postSignin } from '../apis/auth';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { LOCAL_STORAGE_KEY } from '../constants/key';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const {setItem} = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  const {login, accessToken} = useAuth();
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate('/')
+    }
+  }, [ navigate, accessToken])
+
+
   const {values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
     initialValue: {
       email: "",
@@ -19,23 +27,20 @@ const LoginPage = () => {
     validate: validateSignin,
   });
 
-  const navigate = useNavigate();
 
   const handleSubmit = async () => {
-    console.log(values);
     try {
-       const response = await postSignin(values);
-       console.log(response);
-      setItem(response.data.accessToken); // 로그인 성공 시 어세스토큰으로 키를 저장
-      setUser({
-        id: response.data.id,
-        name: response.data.name,
-      })
+      await login(values);
       navigate('/mypage');
-   } catch(error){
-    alert(error?.message);
-   }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      navigate('/login')
+    }
   };
+
+  const handleGoogleLogin = () => {
+    window.location.href = import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login"
+  }
   
 const isDisabled = Object.values(errors || {}).some((error) => error.length > 0) ||
   Object.values(values).some((value) => value === "");
@@ -45,7 +50,9 @@ const { setUser } = useAuth();
   return (
   <div className="flex flex-col items-center justify-center h-full gap-4">
     <div className="text-2xl font-bold p-[13px]">로그인</div>
-    <button className="border w-[300px] p-[13px] focus:border-[#807bff] rounded-lg">구글 로그인</button>
+    <button className="border w-[300px] p-[13px] focus:border-[#807bff] rounded-lg"
+    onClick={handleGoogleLogin} 
+    >구글 로그인</button>
     --- OR ---
     <div className="flex flex-col gap-3">
       <input 
