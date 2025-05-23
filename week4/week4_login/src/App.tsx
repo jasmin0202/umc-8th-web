@@ -9,6 +9,10 @@ import SignupPage from './pages/SignupPage';
 import Mypage from './pages/MyPage';
 import ProtectedLayout from './layouts/ProtectedLayout';
 import GoogleLoginRedirectPage from './pages/GoogleLoginRedirectPage';
+import { Query, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from './context/AuthContext';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from './queryClient';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -41,8 +45,14 @@ const router = createBrowserRouter([...publicRoutes, ...protectedRoutes
 ])
 
 function App() {
-
-  return <RouterProvider router = {router} />
+  return (
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <RouterProvider router = {router} />
+    </AuthProvider>
+    {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false}/>}
+  </QueryClientProvider>
+  )
   
 }
 
